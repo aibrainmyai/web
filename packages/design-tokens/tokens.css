@@ -1,0 +1,21 @@
+/* MYai design tokens for Tailwind CSS 4. Mirrors src/index.ts. Approximate poster values (PLAN section 2). */
+@theme {
+  --color-bg: #010416;
+  --color-bg-deep: #0c0825;
+  --color-surface: #00051b;
+  --color-surface-raised: #06113e;
+  --color-border: #332d6f;
+  --color-primary: #5b71fa;
+  --color-primary-soft: #6989f8;
+  --color-secondary: #bd32c1;
+  --color-highlight: #ffbeff;
+  --color-text: #fefefe;
+  --color-text-muted: #857eae;
+  --color-danger: #f2557a;
+  --color-success: #3dd68c;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}

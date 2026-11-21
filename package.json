@@ -1,0 +1,17 @@
+{
+  "name": "myai",
+  "private": true,
+  "packageManager": "pnpm@12.21.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "turbo run dev --filter=@myai/web",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "emulators": "firebase --config firebase/firebase.json emulators:start --project demo-myai"
+  },
+  "devDependencies": {
+    "firebase-tools": "15.37.0",
+    "turbo": "2.11.13",
+    "typescript": "5.9.3"
+  }
+}

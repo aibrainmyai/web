@@ -1,0 +1,14 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{uid}/attachments/{fileId} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      // 20 MB cap and file types are a proposal awaiting owner confirmation (PLAN section 11).
+      allow create: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 20 * 1024 * 1024
+        && request.resource.contentType.matches('image/(png|jpeg|webp)|application/pdf|text/plain');
+      allow update, delete: if false;   // the delete function removes the file and its record together
+    }
+    match /{allPaths=**} { allow read, write: if false; }
+  }
+}

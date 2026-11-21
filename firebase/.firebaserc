@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "demo-myai",
+    "dev": "myai-dev",
+    "prod": "myai-prod"
+  }
+}
