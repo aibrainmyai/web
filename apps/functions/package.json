@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "main": "lib/index.js",
-  "engines": { "node": "24" },
+  "engines": {
+    "node": "24"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "dev": "tsc -p tsconfig.json --watch"
+    "dev": "tsc -p tsconfig.json --watch",
+    "seed": "node scripts/seed-plans.mjs"
   },
   "dependencies": {
     "firebase-admin": "14.5.1",

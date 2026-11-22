@@ -2,16 +2,22 @@
   "name": "myai",
   "private": true,
   "packageManager": "pnpm@12.21.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "turbo run dev --filter=@myai/web",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
-    "emulators": "firebase --config firebase/firebase.json emulators:start --project demo-myai"
+    "emulators": "firebase --config firebase/firebase.json emulators:start --project demo-myai",
+    "test:rules": "firebase --config firebase/firebase.json emulators:exec --only firestore,storage --project demo-myai \"node --test firebase/tests/\"",
+    "seed:emulator": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 GCLOUD_PROJECT=demo-myai pnpm --filter @myai/functions seed"
   },
   "devDependencies": {
     "firebase-tools": "15.37.0",
     "turbo": "2.11.13",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "@firebase/rules-unit-testing": "6.0.0",
+    "firebase": "13.4.0"
   }
 }

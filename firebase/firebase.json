@@ -5,7 +5,8 @@
     {
       "source": "../apps/functions",
       "codebase": "default",
-      "runtime": "nodejs24"
+      "runtime": "nodejs24",
+      "predeploy": ["pnpm --filter @myai/functions build"]
     }
   ],
   "emulators": {
