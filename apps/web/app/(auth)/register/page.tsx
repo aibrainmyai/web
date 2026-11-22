@@ -5,7 +5,7 @@ import { Suspense, useState, type FormEvent } from "react";
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { registerForm } from "@myai/shared-schemas";
 import { firebase } from "@/lib/firebase";
-import { authErrorMessage } from "@/lib/auth";
+import { authErrorMessage, holdAccountSetup } from "@/lib/auth";
 import { recordConsents } from "@/lib/consent";
 import { useRedirectIfSignedIn } from "@/lib/useRedirectIfSignedIn";
 import { Button, Field, Notice } from "@/components/ui";
@@ -41,6 +41,7 @@ function RegisterForm() {
     }
     setFieldErrors({});
     setBusy(true);
+    const releaseSetup = holdAccountSetup();
     try {
       const { auth } = firebase();
       const cred = await createUserWithEmailAndPassword(auth, parsed.data.email, parsed.data.password);
@@ -51,6 +52,7 @@ function RegisterForm() {
     } catch (err) {
       setError(authErrorMessage(err));
     } finally {
+      releaseSetup();
       setBusy(false);
     }
   }

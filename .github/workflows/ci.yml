@@ -1,0 +1,32 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4          # reads the version from "packageManager" in package.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - uses: actions/setup-java@v4         # the Firestore emulator needs Java
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm --filter @myai/functions build
+      - run: pnpm --filter @myai/web build   # uses the demo values from .env.example, no real project needed
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: demo-key
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: demo-myai.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: demo-myai
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: demo-myai.appspot.com
+          NEXT_PUBLIC_FIREBASE_APP_ID: demo-app-id
+          NEXT_PUBLIC_USE_EMULATORS: "true"
+      - run: pnpm test:rules

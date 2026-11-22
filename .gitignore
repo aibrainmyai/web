@@ -1,7 +1,7 @@
 node_modules/
 .next/
 out/
-lib/
+/apps/functions/lib/
 dist/
 .turbo/
 *.log

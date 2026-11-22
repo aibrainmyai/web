@@ -9,7 +9,7 @@ import { Wordmark } from "@/components/Wordmark";
 
 /** Client-side gate for the signed-in area; no server session cookies in version 1 (PLAN section 7). */
 export function RequireAuth({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
+  const { user, profile, bootstrapError, retry, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -18,6 +18,17 @@ export function RequireAuth({ children }: { children: ReactNode }) {
   }, [user, router, pathname]);
 
   if (!user) return <Spinner label="Checking your session" />;
+  if (bootstrapError)
+    return (
+      <div className="mx-auto flex min-h-dvh max-w-md flex-col justify-center gap-4 px-4">
+        <Notice tone="error">{bootstrapError}</Notice>
+        <div className="flex gap-2">
+          <Button onClick={retry}>Try again</Button>
+          <Button variant="outline" onClick={signOut}>Sign out</Button>
+        </div>
+      </div>
+    );
+  if (!profile) return <Spinner label="Setting up your account" />;
   return <ConsentGate uid={user.uid}>{children}</ConsentGate>;
 }
 
